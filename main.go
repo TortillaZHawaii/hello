@@ -6,14 +6,21 @@ import (
 )
 
 func main() {
-	arr := []int{1, 2, 3}
+	numbers := []int{1, 2, 3}
 
-	for _, num := range arr {
-		if _, err := fmt.Println("num:", num); err != nil {
-			err := errors.Join(errors.New("couldn't print"), err)
-			panic(err)
+	for _, num := range numbers {
+		if err := printNumber(num); err != nil {
+			panic(fmt.Errorf("failed to print number: %w", err))
 		}
 	}
 
 	fmt.Println("hello from the other side")
+}
+
+func printNumber(num int) error {
+	_, err := fmt.Println("num:", num)
+	if err != nil {
+		return fmt.Errorf("couldn't print: %w", err)
+	}
+	return nil
 }
